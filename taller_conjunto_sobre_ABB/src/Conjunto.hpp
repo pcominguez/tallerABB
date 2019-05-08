@@ -8,9 +8,7 @@ Conjunto<T>::Conjunto() {
 template <class T>
 Conjunto<T>::~Conjunto() { 
     // Completar
-    if(_raiz!=NULL){
-        destructorNodo(_raiz);
-    }
+    destructorNodo(_raiz);
 }
 
 template<class T>
@@ -32,10 +30,16 @@ bool Conjunto<T>::pertenece(const T& clave) const {
 template <class T>
 bool Conjunto<T>::perteneceAux(const T& clave ,Nodo* n) const {
     bool res= false;
-    if((n->valor)==clave){
-        res = true;
-    }else{
-        res = perteneceAux(clave,(n->der))||perteneceAux(clave,(n->izq));
+    if(n != NULL) {
+        if ((n->valor) == clave) {
+            res = true;
+        } else {
+            if(clave > n->valor) {
+                res = perteneceAux(clave, (n->der));
+            } else {
+                res = perteneceAux(clave, (n->izq));
+            }
+        }
     }
     return res;
 }
@@ -61,10 +65,8 @@ void Conjunto<T>::insertarAux(Nodo*& n, const T& clave) {
 
 template <class T>
 void Conjunto<T>::remover(const T& clave) {
-    if(!pertenece(clave)){
-        if(_raiz != NULL){
-            removerAux(_raiz, clave);
-        }
+    if(pertenece(clave)){
+        removerAux(_raiz, clave);
     }
 }
 
@@ -73,18 +75,17 @@ void Conjunto<T>::removerAux(Nodo*& n, const T& clave) {
     if((n->valor)==clave){
         Nodo* m = n;
         if((n->izq)!=NULL && (n->der)!=NULL) {
-            m->valor = (maximo(m->izq))->valor;
+            m->valor = ((m->izq).maximo())->valor;
             removerAux(m->izq, m->valor);
         }else{
             &m = NULL;
         }
-        delete(n);
+        delete n;
 
     }else{
         removerAux((n->der), clave);
         removerAux((n->izq), clave);
     }
-
 }
 
 template <class T>
