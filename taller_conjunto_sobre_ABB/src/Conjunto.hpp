@@ -2,11 +2,26 @@
 template <class T>
 Conjunto<T>::Conjunto() {
     // Completar
+    _raiz=NULL;
 }
 
 template <class T>
 Conjunto<T>::~Conjunto() { 
     // Completar
+    if(_raiz!=NULL){
+        destructorNodo(_raiz->der);
+        destructorNodo(_raiz->izq);
+    }
+    delete(_raiz);
+}
+
+template<class T>
+void Conjunto<T>::destructorNodo(Nodo *n) {
+    if(n!=NULL){
+        destructorNodo(n->der);
+        destructorNodo(n->izq);
+    }
+    delete n;
 }
 
 template <class T>

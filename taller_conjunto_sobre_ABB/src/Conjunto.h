@@ -7,6 +7,7 @@
 
 using namespace std;
 
+struct Nodo;
 template <class T>
 class Conjunto
 {
@@ -17,6 +18,8 @@ class Conjunto
 
         // Destructor. Debe dejar limpia la memoria.
         ~Conjunto();
+
+        void destructorNodo(Nodo* n);
 
         // Inserta un elemento en el conjunto. Si este ya existe,
         // el conjunto no se modifica.
