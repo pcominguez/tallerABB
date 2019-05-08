@@ -42,9 +42,7 @@ bool Conjunto<T>::perteneceAux(const T& clave ,Nodo* n) const {
 template <class T>
 void Conjunto<T>::insertar(const T& clave) {
     if(!pertenece(clave)){
-        if(_raiz != NULL){
-            insertarAux(_raiz, clave);
-        }
+        insertarAux(_raiz, clave);
     }
 }
 
@@ -106,8 +104,16 @@ const T& Conjunto<T>::maximo() const {
 
 template <class T>
 unsigned int Conjunto<T>::cardinal() const {
-    assert(false);
-    return 0;
+    return cardinalAux(_raiz);
+}
+
+template <class T>
+unsigned int Conjunto<T>::cardinalAux(Nodo* n) const{
+    unsigned int res =0;
+    if(n != NULL){
+        res = 1 + cardinalAux(n->izq) + cardinalAux(n->der);
+    }
+    return res;
 }
 
 template <class T>

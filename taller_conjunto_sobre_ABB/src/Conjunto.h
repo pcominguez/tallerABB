@@ -69,6 +69,7 @@ class Conjunto
     bool perteneceAux(const T& ,Nodo*)const;
     void insertarAux(Nodo*&, const T&);
     void removerAux(Nodo*& n, const T& clave);
+    unsigned int cardinalAux(Nodo* n) const;
 };
 
 template<class T>
