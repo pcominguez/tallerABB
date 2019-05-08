@@ -7,7 +7,6 @@
 
 using namespace std;
 
-struct Nodo;
 template <class T>
 class Conjunto
 {
@@ -18,8 +17,6 @@ class Conjunto
 
         // Destructor. Debe dejar limpia la memoria.
         ~Conjunto();
-
-        void destructorNodo(Nodo* n);
 
         // Inserta un elemento en el conjunto. Si este ya existe,
         // el conjunto no se modifica.
@@ -68,6 +65,10 @@ class Conjunto
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
 
+    void destructorNodo(Nodo*);
+    bool perteneceAux(const T& ,Nodo*)const;
+    void insertarAux(Nodo*&, const T&);
+    void removerAux(Nodo*& n, const T& clave);
 };
 
 template<class T>

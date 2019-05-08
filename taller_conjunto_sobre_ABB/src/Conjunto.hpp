@@ -9,35 +9,84 @@ template <class T>
 Conjunto<T>::~Conjunto() { 
     // Completar
     if(_raiz!=NULL){
-        destructorNodo(_raiz->der);
-        destructorNodo(_raiz->izq);
+        destructorNodo(_raiz);
     }
-    delete(_raiz);
 }
 
 template<class T>
-void Conjunto<T>::destructorNodo(Nodo *n) {
+void Conjunto<T>::destructorNodo(Nodo* n) {
     if(n!=NULL){
         destructorNodo(n->der);
         destructorNodo(n->izq);
+        delete n;
     }
-    delete n;
 }
+template <class T>
+Conjunto<T>::Nodo::Nodo(const T &v) :valor(v),izq(NULL),der(NULL){};
 
 template <class T>
 bool Conjunto<T>::pertenece(const T& clave) const {
-    assert(false);
-    return false;
+    return perteneceAux(clave, _raiz);
 }
 
+template <class T>
+bool Conjunto<T>::perteneceAux(const T& clave ,Nodo* n) const {
+    bool res= false;
+    if((n->valor)==clave){
+        res = true;
+    }else{
+        res = perteneceAux(clave,(n->der))||perteneceAux(clave,(n->izq));
+    }
+    return res;
+}
 template <class T>
 void Conjunto<T>::insertar(const T& clave) {
-    assert(false);
+    if(!pertenece(clave)){
+        if(_raiz != NULL){
+            insertarAux(_raiz, clave);
+        }
+    }
 }
 
 template <class T>
-void Conjunto<T>::remover(const T&) {
-    assert(false);
+void Conjunto<T>::insertarAux(Nodo*& n, const T& clave) {
+    if(n!=NULL){
+        if((n->valor) > clave){
+            insertarAux((n->izq),clave);
+        }else{
+            insertarAux((n->der), clave);
+        }
+    }else{
+        n = new Nodo(clave);
+    }
+}
+
+template <class T>
+void Conjunto<T>::remover(const T& clave) {
+    if(!pertenece(clave)){
+        if(_raiz != NULL){
+            removerAux(_raiz, clave);
+        }
+    }
+}
+
+template <class T>
+void Conjunto<T>::removerAux(Nodo*& n, const T& clave) {
+    if((n->valor)==clave){
+        Nodo* m = n;
+        if((n->izq)!=NULL && (n->der)!=NULL) {
+            m->valor = (maximo(m->izq))->valor;
+            removerAux(m->izq, m->valor);
+        }else{
+            &m = NULL;
+        }
+        delete(n);
+
+    }else{
+        removerAux((n->der), clave);
+        removerAux((n->izq), clave);
+    }
+
 }
 
 template <class T>
