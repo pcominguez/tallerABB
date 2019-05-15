@@ -64,12 +64,16 @@ class Conjunto
 
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
+        int length;
 
     void destructorNodo(Nodo*);
     bool perteneceAux(const T& ,Nodo*)const;
     void insertarAux(Nodo*&, const T&);
-    void removerAux(Nodo*& n, const T& clave);
-    unsigned int cardinalAux(Nodo* n) const;
+    void removerAux(Nodo*& , const T&, Nodo*);
+    const T& siguienteAux(const T& clave ,Nodo* n, vector<Nodo*> v) const;
+    unsigned int cardinalAux(Nodo*) const;
+    const T& maximoNodo(Nodo*)const;
+    const T& minimoNodo(Nodo*)const;
 };
 
 template<class T>

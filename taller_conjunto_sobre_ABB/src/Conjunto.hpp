@@ -1,9 +1,9 @@
+#include <vector>
 
 template <class T>
-Conjunto<T>::Conjunto() {
+Conjunto<T>::Conjunto()
     // Completar
-    _raiz=NULL;
-}
+    :_raiz(NULL), length(0){}
 
 template <class T>
 Conjunto<T>::~Conjunto() { 
@@ -66,41 +66,97 @@ void Conjunto<T>::insertarAux(Nodo*& n, const T& clave) {
 template <class T>
 void Conjunto<T>::remover(const T& clave) {
     if(pertenece(clave)){
-        removerAux(_raiz, clave);
+        Nodo* anterior = NULL;
+        removerAux(_raiz, clave, anterior);
     }
 }
 
 template <class T>
-void Conjunto<T>::removerAux(Nodo*& n, const T& clave) {
+void Conjunto<T>::removerAux(Nodo*& n, const T& clave, Nodo* anterior) {
     if((n->valor)==clave){
         Nodo* m = n;
-        if((n->izq)!=NULL && (n->der)!=NULL) {
-            m->valor = ((m->izq).maximo())->valor;
-            removerAux(m->izq, m->valor);
-        }else{
-            &m = NULL;
+        if((n->izq)!=NULL || (n->der)!=NULL) {
+            if ((n->izq) == NULL && (n->der) != NULL) {
+                &m = m->der;
+            } else {
+                m->valor = maximoNodo(m->izq)->valor;
+                removerAux(m->izq, m->valor, m);
+            }
         }
-        delete n;
 
+        delete n;
     }else{
-        removerAux((n->der), clave);
-        removerAux((n->izq), clave);
+        if((n->valor) > clave){
+            removerAux((n->izq), clave);
+        }else{
+            removerAux((n->der), clave);
+        }
     }
 }
+
 
 template <class T>
 const T& Conjunto<T>::siguiente(const T& clave) {
-    assert(false);
+    vector<Nodo*> v;
+    return siguienteAux(clave, _raiz, v);
+}
+
+template <class T>
+const T& Conjunto<T>::siguienteAux(const T& clave ,Nodo* n, vector<Nodo*> v) const {
+    Nodo *res = n;
+    if (n->valor == clave) {
+        if((n->der) != NULL) {
+            res = res->der;
+            return minimoNodo(res); 
+        } else {
+            int i = 0;
+            while((n->valor) > (v[i]->valor)){
+                i++;
+            };
+            return v[i]->valor;
+        }
+    } else {
+        v.push_back(res);
+        if (clave > n->valor) {
+            return siguienteAux(clave, (n->der), v);
+        } else {
+            return siguienteAux(clave, (n->izq), v);
+        }
+    }
+}
+
+template <class T>
+const T& Conjunto<T>::maximoNodo(typename Conjunto<T>::Nodo* n)const {
+    while(n->der != NULL){
+        n = n->der;
+    }
+    return (*n).valor;
+}
+
+template <class T>
+const T& Conjunto<T>::minimoNodo(typename Conjunto<T>::Nodo* n)const {
+    while(n->izq != NULL){
+        n = n->izq;
+    }
+    return (*n).valor;
 }
 
 template <class T>
 const T& Conjunto<T>::minimo() const {
-    assert(false);
+    Nodo *res = _raiz;
+    while(res->izq != NULL){
+        res = res->izq;
+    }
+    return (*res).valor;
 }
 
 template <class T>
 const T& Conjunto<T>::maximo() const {
-    assert(false);
+    Nodo *res = _raiz;
+    while(res->der != NULL){
+        res = res->der;
+    }
+    return (*res).valor;
 }
 
 template <class T>

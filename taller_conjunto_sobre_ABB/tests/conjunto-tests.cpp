@@ -50,7 +50,7 @@ TEST(conjunto_test, test_pertenece) {
 
 }
 
-TEST(conjunto_test, test_insertar_remover_un_valor) {
+/*TEST(conjunto_test, test_insertar_remover_un_valor) {
     Conjunto<int> c;
     c.insertar(5);
     c.remover(5);
@@ -58,7 +58,7 @@ TEST(conjunto_test, test_insertar_remover_un_valor) {
     c.insertar(5);
     EXPECT_EQ(c.cardinal(), 1);
 }
-/*
+*/
 TEST(conjunto_test, test_minimo) {
     Conjunto<int> c;
     c.insertar(5);
@@ -79,7 +79,7 @@ TEST(conjunto_test, test_maximo) {
     EXPECT_EQ(c.maximo(), 8);
 }
 
-TEST(conjunto_test, test_remover_caso_un_hijo) {
+/*TEST(conjunto_test, test_remover_caso_un_hijo) {
     Conjunto<int> c;
     c.insertar(5);
     c.insertar(6);
@@ -113,7 +113,7 @@ TEST(conjunto_test, test_remover_caso_dos_hijos_doble) {
     c.remover(20);
     EXPECT_EQ(c.cardinal(), 8);
 }
-
+*/
 TEST(conjunto_test, test_siguiente_inorder) {
     Conjunto<int> c;
     c.insertar(5);
@@ -136,7 +136,7 @@ const int NCLAVES = 1000;
 int clave(int i) {
 	return NCLAVES * ((i * i - 100 * i) % NCLAVES) + i;
 }
-
+/*
 TEST(conjunto_test, test_stress) {
     Conjunto<int> c;
 
