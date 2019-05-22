@@ -66,30 +66,68 @@ void Conjunto<T>::insertarAux(Nodo*& n, const T& clave) {
 template <class T>
 void Conjunto<T>::remover(const T& clave) {
     if(pertenece(clave)){
-        Nodo* anterior = NULL;
-        removerAux(_raiz, clave, anterior);
+        Nodo* padre = NULL;
+        int dir = 2;
+        removerAux(_raiz, clave, padre, dir);
     }
 }
 
 template <class T>
-void Conjunto<T>::removerAux(Nodo*& n, const T& clave, Nodo* anterior) {
-    if((n->valor)==clave){
-        Nodo* m = n;
-        if((n->izq)!=NULL || (n->der)!=NULL) {
-            if ((n->izq) == NULL && (n->der) != NULL) {
-                &m = m->der;
-            } else {
-                m->valor = maximoNodo(m->izq)->valor;
-                removerAux(m->izq, m->valor, m);
+void Conjunto<T>::removerAux(Nodo* n, const T& clave, Nodo* padre, int dir) {
+    if ((n->valor) == clave) {                                  //si encontre el valor
+        if ((n->izq) != NULL || (n->der) != NULL) {             //si no es hoja tengo 3 casos
+            if ((n->izq) == NULL && (n->der) != NULL) {         //1  tengo solo hijo derecho
+                if(dir == 0){
+                    n = n->der;
+                    padre = n;
+                    dir = 0;
+                    removerAux(n->der, n->valor, padre, dir);
+                }else{
+                    n = n->der;
+                    padre = n;
+                    dir = 1;
+                    removerAux(n->izq, n->valor, padre, dir);
+                }
+                delete n;
+            }else {
+                if ((n->izq) != NULL && (n->der) == NULL) {         //2  tengo solo hijo izquierdo
+                    if (dir == 0) {
+                        padre->der = n->izq;
+                    }else{
+                        padre->izq = n->izq;
+                    }
+                    delete n;
+                }else{
+                    if ((n->izq) != NULL && (n->der) != NULL) {         //3  tengo dos hijos
+                        n->valor = maximoNodo(n->izq);
+                        padre = n;
+                        dir = 1;
+                        removerAux(n->izq, n->valor, padre, dir);
+                    }
+                }
+            }
+        }else{                                                //si es hoja tengo 2 casos
+            if (padre == NULL){
+                _raiz = NULL;
+                delete n;
+            }else {
+                if (dir == 0) {                     //1
+                    padre->der = NULL;
+                    delete n;
+                } else {                                            //2
+                    padre->izq = NULL;
+                    delete n;
+                }
             }
         }
-
-        delete n;
-    }else{
-        if((n->valor) > clave){
-            removerAux((n->izq), clave);
-        }else{
-            removerAux((n->der), clave);
+    } else {                                                    //si no es la clave busco en los dos subarboles
+        padre = n;
+        if ((n->valor) > clave) {
+            dir = 1;
+            removerAux((n->izq), clave, padre, dir);
+        } else {
+            dir = 0;
+            removerAux((n->der), clave, padre, dir);
         }
     }
 }
@@ -166,7 +204,7 @@ unsigned int Conjunto<T>::cardinal() const {
 
 template <class T>
 unsigned int Conjunto<T>::cardinalAux(Nodo* n) const{
-    unsigned int res =0;
+    unsigned int res = 0;
     if(n != NULL){
         res = 1 + cardinalAux(n->izq) + cardinalAux(n->der);
     }

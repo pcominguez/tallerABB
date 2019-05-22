@@ -69,7 +69,7 @@ class Conjunto
     void destructorNodo(Nodo*);
     bool perteneceAux(const T& ,Nodo*)const;
     void insertarAux(Nodo*&, const T&);
-    void removerAux(Nodo*& , const T&, Nodo*);
+    void removerAux(Nodo* n, const T& clave, Nodo* padre, int dir);
     const T& siguienteAux(const T& clave ,Nodo* n, vector<Nodo*> v) const;
     unsigned int cardinalAux(Nodo*) const;
     const T& maximoNodo(Nodo*)const;

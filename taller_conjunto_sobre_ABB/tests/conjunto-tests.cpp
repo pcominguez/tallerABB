@@ -50,7 +50,8 @@ TEST(conjunto_test, test_pertenece) {
 
 }
 
-/*TEST(conjunto_test, test_insertar_remover_un_valor) {
+
+TEST(conjunto_test, test_insertar_remover_un_valor) {
     Conjunto<int> c;
     c.insertar(5);
     c.remover(5);
@@ -58,7 +59,7 @@ TEST(conjunto_test, test_pertenece) {
     c.insertar(5);
     EXPECT_EQ(c.cardinal(), 1);
 }
-*/
+
 TEST(conjunto_test, test_minimo) {
     Conjunto<int> c;
     c.insertar(5);
@@ -79,7 +80,7 @@ TEST(conjunto_test, test_maximo) {
     EXPECT_EQ(c.maximo(), 8);
 }
 
-/*TEST(conjunto_test, test_remover_caso_un_hijo) {
+TEST(conjunto_test, test_remover_caso_un_hijo) {
     Conjunto<int> c;
     c.insertar(5);
     c.insertar(6);
@@ -113,7 +114,7 @@ TEST(conjunto_test, test_remover_caso_dos_hijos_doble) {
     c.remover(20);
     EXPECT_EQ(c.cardinal(), 8);
 }
-*/
+
 TEST(conjunto_test, test_siguiente_inorder) {
     Conjunto<int> c;
     c.insertar(5);
@@ -136,51 +137,52 @@ const int NCLAVES = 1000;
 int clave(int i) {
 	return NCLAVES * ((i * i - 100 * i) % NCLAVES) + i;
 }
-/*
+
 TEST(conjunto_test, test_stress) {
     Conjunto<int> c;
 
     // Insertar
     for (int i = 0; i < NCLAVES; i++) {
-	    int k = clave(i);
-	    ASSERT_EQ(c.cardinal(), i);
-	    ASSERT_FALSE(c.pertenece(k));
-	    c.insertar(k);
-	    ASSERT_TRUE(c.pertenece(k));
+        int k = clave(i);
+        ASSERT_EQ(c.cardinal(), i);
+        ASSERT_FALSE(c.pertenece(k));
+        c.insertar(k);
+        ASSERT_TRUE(c.pertenece(k));
     }
     ASSERT_EQ(c.cardinal(), NCLAVES);
 
     // Insertar de nuevo
     for (int i = 0; i < NCLAVES; i++) {
-	    int k = clave(i);
-	    ASSERT_TRUE(c.pertenece(k));
-	    c.insertar(k);
-	    ASSERT_TRUE(c.pertenece(k));
-	    ASSERT_EQ(c.cardinal(), NCLAVES);
+        int k = clave(i);
+        ASSERT_TRUE(c.pertenece(k));
+        c.insertar(k);
+        ASSERT_TRUE(c.pertenece(k));
+        ASSERT_EQ(c.cardinal(), NCLAVES);
     }
 
     // Eliminar los valores para i par
     for (int i = 0; i < NCLAVES; i++) {
-	    int k = clave(i);
-	    ASSERT_TRUE(c.pertenece(k));
-	    if (i % 2 == 0) {
-	    	c.remover(k);
-	    	ASSERT_FALSE(c.pertenece(k));
-	    }
+        int k = clave(i);
+        ASSERT_TRUE(c.pertenece(k));
+        if (i % 2 == 0) {
+            c.remover(k);
+            ASSERT_FALSE(c.pertenece(k));
+        }
     }
     ASSERT_EQ(c.cardinal(), NCLAVES / 2);
 
     // Eliminar los valores para i impar
     for (int i = 0; i < NCLAVES; i++) {
-	    int k = clave(i);
-	    if (i % 2 == 0) {
-	    	ASSERT_FALSE(c.pertenece(k));
-	    } else {
-	    	ASSERT_TRUE(c.pertenece(k));
-	    	c.remover(k);
-	    	ASSERT_FALSE(c.pertenece(k));
-	    }
+        int k = clave(i);
+        if (i % 2 == 0) {
+            ASSERT_FALSE(c.pertenece(k));
+        } else {
+            ASSERT_TRUE(c.pertenece(k));
+            c.remover(k);
+            ASSERT_FALSE(c.pertenece(k));
+        }
     }
+
     ASSERT_EQ(c.cardinal(), 0);
 
     // Verificar que no haya valores
@@ -188,4 +190,4 @@ TEST(conjunto_test, test_stress) {
 	    int k = clave(i);
 	    ASSERT_FALSE(c.pertenece(k));
     }
-}*/
+}
