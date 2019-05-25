@@ -74,39 +74,31 @@ void Conjunto<T>::remover(const T& clave) {
 template <class T>
 void Conjunto<T>::removerAux(Nodo* n, const T& clave, Nodo* padre) {
     if ((n->valor) == clave) {                                  //si encontre el valor
-        if ((n->izq) != NULL || (n->der) != NULL) {             //si no es hoja tengo 3 casos
-            if ((n->izq) == NULL && (n->der) != NULL) {         //1  tengo solo hijo derecho
-                n->valor = maximoNodo(n->der);
-                padre = n;
-                removerAux(n->der, n->valor, padre);
-            }else {
-                if ((n->izq) != NULL && (n->der) == NULL) {     //2  tengo solo hijo izquierdo
-                    n->valor = maximoNodo(n->izq);
-                    padre = n;
-                    removerAux(n->der, n->valor, padre);
-                }else{
-                    if ((n->izq) != NULL && (n->der) != NULL) {//3  tengo dos hijos
-                        n->valor = maximoNodo(n->izq);
-                        padre = n;
-                        removerAux(n->izq, n->valor, padre);
-                    }
-                }
-            }
-        }else{                                                //si es hoja tengo 2 casos
+        if ((n->izq) == NULL && (n->der) == NULL) {             //si es hoja tengo 3 casos
             if (padre == NULL){
-                _raiz = NULL;
+                _raiz = NULL;                                   //1 raiz
                 delete n;
-            }else {
-                if (n >= padre) {                                //1
+            }else{
+                if (n >= padre) {                               //2 si es hijo der
                     padre->der = NULL;
                     delete n;
-                } else {                                       //2
+                } else {                                        //3 si es hijo izq
                     padre->izq = NULL;
                     delete n;
                 }
             }
+        }else{                                                  //si no es hoja tengo 3 casos
+            if ((n->izq) == NULL && (n->der) != NULL) {         //1  tengo solo hijo derecho
+                n->valor = minimoNodo(n->der);
+                padre = n;
+                removerAux(n->der, n->valor, padre);
+            }else{                                              //2 y 3 si tengo un hijo solo izq o si tengo los dos hijos
+                n->valor = maximoNodo(n->izq);
+                padre = n;
+                removerAux(n->izq, n->valor, padre);
+            }
         }
-    } else {                                                    //si no es la clave busco en los dos subarboles
+    }else{                                                      //si no es la clave busco en los dos subarboles
         padre = n;
         if ((n->valor) > clave) {
             removerAux((n->izq), clave, padre);
