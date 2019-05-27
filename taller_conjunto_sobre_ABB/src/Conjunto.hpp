@@ -79,7 +79,7 @@ void Conjunto<T>::removerAux(Nodo* n, const T& clave, Nodo* padre) {
                 _raiz = NULL;                                   //1 raiz
                 delete n;
             }else{
-                if (n >= padre) {                               //2 si es hijo der
+                if (n->valor >= padre->valor) {                               //2 si es hijo der
                     padre->der = NULL;
                     delete n;
                 } else {                                        //3 si es hijo izq
