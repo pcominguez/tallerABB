@@ -77,16 +77,14 @@ void Conjunto<T>::removerAux(Nodo* n, const T& clave, Nodo* padre) {
         if ((n->izq) == NULL && (n->der) == NULL) {             //si es hoja tengo 3 casos
             if (padre == NULL){
                 _raiz = NULL;                                   //1 raiz
-                delete n;
             }else{
-                if (n->valor >= padre->valor) {                               //2 si es hijo der
-                    padre->der = NULL;
-                    delete n;
-                } else {                                        //3 si es hijo izq
-                    padre->izq = NULL;
-                    delete n;
+                if(padre -> der == n){
+                    padre -> der = NULL;
+                }else{
+                    padre -> izq = NULL;
                 }
             }
+            delete n;
         }else{                                                  //si no es hoja tengo 3 casos
             if ((n->izq) == NULL && (n->der) != NULL) {         //1  tengo solo hijo derecho
                 n->valor = minimoNodo(n->der);

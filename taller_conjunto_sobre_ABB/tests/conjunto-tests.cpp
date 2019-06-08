@@ -114,7 +114,7 @@ TEST(conjunto_test, test_remover_caso_dos_hijos_doble) {
     c.remover(20);
     EXPECT_EQ(c.cardinal(), 8);
 }
-/*
+
 TEST(conjunto_test, test_siguiente_inorder) {
     Conjunto<int> c;
     c.insertar(5);
@@ -191,4 +191,3 @@ TEST(conjunto_test, test_stress) {
 	    ASSERT_FALSE(c.pertenece(k));
     }
 }
-*/
